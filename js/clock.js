@@ -994,13 +994,82 @@ function display_day()
 function zoom_in()
 {
 	var sizeArray = ["25px", "50px", "75px", "100px", "125px"];
-	
-	alert("You selected zoom in");
+	var arrayIndex;
+	var full_time   = document.getElementById("full-time");
+	var currentSize = getComputedStyle(full_time).getPropertyValue("font-size");
 
+	for(i = 0; i <= 5; i++)
+	{
+		if(currentSize == sizeArray[i])
+		{
+			arrayIndex = i;
+			break;
+		}
+	}
+	
+	if(currentSize == "125px")
+	{
+		alert("Font size already at maximum.");
+	}
+	else
+	{
+		document.getElementById("full-time").style.fontSize = sizeArray[i+1];
+	}
+
+}
+
+function zoom_out()
+{
+	var sizeArray = ["25px", "50px", "75px", "100px", "125px"];
+	var arrayIndex;
+	var full_time   = document.getElementById("full-time");
+	var currentSize = getComputedStyle(full_time).getPropertyValue("font-size");
+
+	for(i = 0; i <= 5; i++)
+	{
+		if(currentSize == sizeArray[i])
+		{
+			arrayIndex = i;
+			break;
+		}
+	}
+	
+	if(currentSize == "25px")
+	{
+		alert("Font size already at minimum.");
+	}
+	else
+	{
+		document.getElementById("full-time").style.fontSize = sizeArray[i-1];
+	}
 
 }
 
 
+function hide_show()
+{
+
+	var visibilityOfClock   = document.getElementById("full-time");
+	var currentVisibilityOfClock = getComputedStyle(visibilityOfClock).getPropertyValue("visibility");
+	var visibilityOfAMPM   = document.getElementById("am_pm");
+	var currentVisibilityOfAMPM = getComputedStyle(visibilityOfAMPM).getPropertyValue("visibility");
+
+	if ((currentVisibilityOfClock == "visible") && (currentVisibilityOfAMPM == "visible"))
+	{
+		document.getElementById("full-time").style.visibility = "hidden";
+		document.getElementById("am_pm").style.visibility = "hidden";
+		document.getElementById("hideshow_button").innerHTML = "Show Display";
+	}
+
+	if ((currentVisibilityOfClock == "hidden") && (currentVisibilityOfAMPM == "hidden"))
+	{
+		document.getElementById("full-time").style.visibility = "visible";
+		document.getElementById("am_pm").style.visibility = "visible";
+		document.getElementById("hideshow_button").innerHTML = "Hide Display";
+	}
+
+
+}
 
 
 

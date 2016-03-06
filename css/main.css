@@ -57,8 +57,11 @@ div#controls_display{
     padding-top: 20px;
 }
 
-/* display time */
-#full-time{	font-size: 100px;
+/* display time, font-size changes clock size  */
+#full-time{	
+
+	font-size: 75px;
+	visibility: shown;
 
 	
 }
@@ -66,6 +69,7 @@ div#controls_display{
 /* display AM/PM */
 #am_pm{
 	font-size: 25px;
+	visibility: shown;
 }
 
 /* select time mode box */
@@ -155,7 +159,7 @@ div#set_day_input{
 	cursor:pointer;
 }
 
-#hide_show {
+#hideshow_button {
 	padding:5px 15px;
 	margin-left: 30px;
 	font-size: 30px;
