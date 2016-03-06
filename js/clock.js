@@ -11,10 +11,13 @@ var minutes=0;
 var seconds=0;
 
 // Our variables
-var clockBegin = true;//fixes issue with starting at 1 second after the specified time
+var timeBegin = true;//fixes issue with starting at 1 second after the specified time
+var clockToggle = true;
+var stopwatchToggle = false;
+var timerToggle = false;
 
 //run the clock function every second.
-setInterval(clock, 1000);
+var clockInterval = setInterval(clock, 1000);
 
 //clock running functions
 /**
@@ -35,20 +38,20 @@ setInterval(clock, 1000);
  */
 function clock()
 {
-	if(clockBegin){}//clock begins, make sure it doesn't increment a second immediately	
+	if(timeBegin){}//clock begins, make sure it doesn't increment a second immediately	
 	else
 	{	
 		increment_second();
 	}
 	
-	if((seconds % 60) == 0 && !clockBegin)
+	if((seconds % 60) == 0 && !timeBegin)
 	{
 		increment_minute();
 		reset_seconds();
 	}
-	else if(clockBegin)
+	else if(timeBegin)
 	{
-		clockBegin = false;
+		timeBegin = false;
 	}
 	
 	if(minutes == 60)
@@ -393,30 +396,7 @@ for(var i=0; i<=59; i++) {
  * @post clock display update to new time
  */
 document.getElementById('set_time').addEventListener('click', function() {
-	//hours need to modify
-	var slected_hours = parseInt(document.getElementById("select_hour").value);
-	
-	//these are directly set
-	minutes = parseInt(document.getElementById("select_minute").value);
-	seconds = parseInt(document.getElementById("select_second").value);
-
-	//hours needs more work to get it display properly 
-	var am_pm   = document.getElementById("select_am_pm").value;
-	
-	if (am_pm == "am" && slected_hours == 12)
-	{
-		hours = 0;
-	} else if (am_pm == "am")
-	{
-		hours = slected_hours;
-	} else if (am_pm == "pm" && slected_hours == 12){
-		hours = 12;
-	} else if (am_pm == "pm")
-	{
-		hours = slected_hours + 12;
-	}
-	
-	clockBegin = true;//clock begins again, make sure it doesn't increment a second immediately
+        funcSetTime();
 	
 	//clear drop downs and set to default
 	var select_hour = document.getElementById("select_hour");
@@ -445,6 +425,40 @@ document.getElementById('set_time').addEventListener('click', function() {
 	document.getElementById("time").style.display = '';
 });
 
+function funcSetTime(){
+	//hours need to modify
+	var slected_hours = parseInt(document.getElementById("select_hour").value);
+	
+	//these are directly set
+	minutes = parseInt(document.getElementById("select_minute").value);
+	seconds = parseInt(document.getElementById("select_second").value);
+
+	//hours needs more work to get it display properly 
+	var am_pm   = document.getElementById("select_am_pm").value;
+	
+	if (am_pm == "am" && slected_hours == 12)
+	{
+		hours = 0;
+	} else if (am_pm == "am")
+	{
+		hours = slected_hours;
+	} else if (am_pm == "pm" && slected_hours == 12){
+		hours = 12;
+	} else if (am_pm == "pm")
+	{
+		hours = slected_hours + 12;
+	}
+	
+	//stop flashing
+	clearInterval(flashing_handle);
+	
+	//Reset the time display's display property after flashing is stopped
+	document.getElementById("time").style.display = '';
+
+	
+	timeBegin = true;
+}
+
 /**
  * Make Time display flash until time has been set once.
  * <p>
@@ -461,6 +475,9 @@ flashing_handle = setInterval(function() {
 
 
 
+/**
+*	Our code begins here
+*/
 
 /**
  * Increments day/month if applicable  (1)
@@ -986,4 +1003,104 @@ function display_day()
 			}
 			break;
 	}
+}
+
+/*	
+*	~~STOPWATCH~~
+*	Start/stop toggle for stopwatch.
+*	Start will begin the stopwatch at 00:00:00 if stopwatch is not already toggled on.
+*	Start will resume stopwatch at displayed time if stopwatch was recently stopped.
+*	Stop will stop stopwatch if it is started and hold the displayed time.
+*/
+document.getElementById('stopwatch_start_stop_button').addEventListener('click', function() {
+
+	if(document.getElementById('stopwatch_start_stop_button').innerHTML == "Start")//in stopped state
+	{
+		document.getElementById('stopwatch_start_stop_button').innerHTML = "Stop";
+
+		if(!stopwatchToggle)
+		{
+
+			//Start will begin the stopwatch at 00:00:00 if stopwatch is not already toggled on.
+			funcSetTime();
+
+			choose_ST_SW_TM(1);
+		}
+		startDisplay();
+	} 
+	else//=="Stop", in started state
+	{
+		document.getElementById('stopwatch_start_stop_button').innerHTML = "Start";
+		stopDisplay();
+	}	
+});
+
+/*
+*	~~STOPWATCH~~
+*	Reset for stopwatch.
+*	Reset will set stopwatch at 00:00:00. 
+*	Reset will stop stopwatch. 
+*	Reset will turn the Start/stop toggle to display start.
+*/
+document.getElementById('stopwatch_reset_button').addEventListener('click', function() {
+
+	if(stopwatchToggle)
+	{
+		//Reset will set stopwatch at 00:00:00. 
+		funcSetTime();
+
+
+		if(document.getElementById('stopwatch_start_stop_button').innerHTML == "Start")//in stopped state
+		{
+			startDisplay();//must update the display to 00:00:00 before stopping display
+		}
+		else//=="Stop", in started state
+		{
+			document.getElementById('stopwatch_start_stop_button').innerHTML = "Start";
+		}
+         
+		setTimeout(stopDisplay, 1000);//must hit the next second (run clock() for 1000ms) in order to update the display to 00:00:00 before stopping display
+		
+	}
+});
+
+//choose between set_time, stopwatch, or timer modes
+//the mode gets its boolean flag toggled on, others toggled off (e.g. set_time gets clockToggle set to true and stopwatchToggle and timerToggle goes to false)
+//this is a more organized way to toggle what is displayed (toggle flags will determine which mode is displayed)
+//in addition, this will also turn the other modes into stopped state
+//parameter: 0 == set_time, 1 == stopwatch, 2 == timer
+function choose_ST_SW_TM(ST_SW_TM)
+{
+	if(ST_SW_TM == 0)//set_time, disable stopwatch and timer
+	{
+		clockToggle = true;		stopwatchToggle = false;	timerToggle = false;
+
+		//turn off stopwatch and timer
+	}
+	else if(ST_SW_TM == 1)//stopwatch, disable set_time and timer
+	{
+		clockToggle = false;	stopwatchToggle = true;		timerToggle = false;
+
+		//turn off timer
+	}
+	else//if(ST_SW_TM == 2)//timer, disable set_time and stopwatch
+	{
+		clockToggle = false;	stopwatchToggle = false;	timerToggle = true;
+
+		//turn off stopwatch
+	}
+}
+
+
+//used by stopwatch and timer
+function stopDisplay()
+{
+	clearInterval(clockInterval);
+}
+
+//used by stopwatch, timer, and set_time (to start display again if it is stopped by stopwatch or timer)
+function startDisplay()
+{
+	clearInterval(clockInterval);//if clock interval has been set already, then need to clear it first as not to stack executions with each interval
+	clockInterval = setInterval(clock, 1000);
 }
