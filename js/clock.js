@@ -66,11 +66,18 @@ function clock()
 		increment_day();
 	}
 
-	if(document.getElementById('display_12hr').checked)
+	if(clockToggle)
 	{
-		display_12hr_time(hours, minutes, seconds);
+		if(document.getElementById('display_12hr').checked)
+		{
+			display_12hr_time(hours, minutes, seconds);
+		}
+		else
+		{
+			display_24hr_time(hours, minutes, seconds);
+		}
 	}
-	else
+	else if(stopwatchToggle)
 	{
 		display_24hr_time(hours, minutes, seconds);
 	}
@@ -423,6 +430,9 @@ document.getElementById('set_time').addEventListener('click', function() {
 	
 	//Reset the time display's display property after flashing is stopped
 	document.getElementById("time").style.display = '';
+        
+        choose_ST_SW_TM(0);
+        startDisplay();
 });
 
 function funcSetTime(){
@@ -1076,6 +1086,7 @@ function choose_ST_SW_TM(ST_SW_TM)
 		clockToggle = true;		stopwatchToggle = false;	timerToggle = false;
 
 		//turn off stopwatch and timer
+                document.getElementById('stopwatch_start_stop_button').innerHTML = "Start"
 	}
 	else if(ST_SW_TM == 1)//stopwatch, disable set_time and timer
 	{
