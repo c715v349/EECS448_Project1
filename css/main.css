@@ -97,14 +97,15 @@ div#set_time_input{
 /* set time button */
 #set_time {
 	padding:5px 15px;
-    margin-left: 60px;
-    font-size: 24px;
+    	margin-left: 60px;
+    	font-size: 24px;
 	border-radius: 50%;
 	font-family: Verdana, Geneva, sans-serif;
 	color: #00FF00;
-    background-color: #505050;
-    border: 4px solid #00FF00; 
-    cursor:pointer;
+    	background-color: #505050;
+   	border: 4px solid #00FF00; 
+   	cursor:pointer;
+	outline: 0;
 }
 
 /* time slecect drop down box */
@@ -114,12 +115,6 @@ select{
 	cursor:pointer;
 	background-color: #C0C0C0;
 }
-	
-
-
-
-
-
 
 /* Weekday display */
 div#weekday_display{
@@ -157,6 +152,7 @@ div#set_day_input{
 	background-color: #505050;
 	border: 4px solid #00FF00; 
 	cursor:pointer;
+	outline: 0;
 }
 
 #hideshow_button {
@@ -169,6 +165,7 @@ div#set_day_input{
 	background-color: #505050;
 	border: 4px solid #00FF00; 
 	cursor:pointer;
+	outline: 0;
 }
 
 /* Calendar display */
@@ -183,4 +180,8 @@ div#daymonth_display{
     padding-top: 5px;
 }
 
-
+/* To avoid dotted outline outside of button */
+input
+{
+	outline: 0;
+}
