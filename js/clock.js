@@ -1030,9 +1030,8 @@ document.getElementById('stopwatch_start_stop_button').addEventListener('click',
 
 		if(!stopwatchToggle)
 		{
-
-			//Start will begin the stopwatch at 00:00:00 if stopwatch is not already toggled on.
-			funcSetTime();
+                        //Start will begin the stopwatch at 00:00:00 if stopwatch is not already toggled on.
+			stopwatchSetInit();
 
 			choose_ST_SW_TM(1);
 		}
@@ -1057,7 +1056,7 @@ document.getElementById('stopwatch_reset_button').addEventListener('click', func
 	if(stopwatchToggle)
 	{
 		//Reset will set stopwatch at 00:00:00. 
-		funcSetTime();
+		stopwatchSetInit();
 
 
 		if(document.getElementById('stopwatch_start_stop_button').innerHTML == "Start")//in stopped state
@@ -1073,6 +1072,18 @@ document.getElementById('stopwatch_reset_button').addEventListener('click', func
 		
 	}
 });
+
+//begin the stopwatch at 00:00:00
+function stopwatchSetInit()
+{
+    hours = 0; minutes = 0; seconds = 0;
+    timeBegin = true;
+    //stop flashing
+    clearInterval(flashing_handle);
+
+    //Reset the time display's display property after flashing is stopped
+    document.getElementById("time").style.display = '';
+}
 
 //choose between set_time, stopwatch, or timer modes
 //the mode gets its boolean flag toggled on, others toggled off (e.g. set_time gets clockToggle set to true and stopwatchToggle and timerToggle goes to false)
