@@ -1110,6 +1110,7 @@ function choose_ST_SW_TM(ST_SW_TM)
 		clockToggle = false;	stopwatchToggle = false;	timerToggle = true;
 
 		//turn off stopwatch
+                document.getElementById('stopwatch_start_stop_button').innerHTML = "Start"
 	}
 }
 
