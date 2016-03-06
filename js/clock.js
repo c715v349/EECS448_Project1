@@ -987,3 +987,20 @@ function display_day()
 			break;
 	}
 }
+
+
+/* ****************************************    */
+
+function zoom_in()
+{
+	var sizeArray = ["25px", "50px", "75px", "100px", "125px"];
+	
+	alert("You selected zoom in");
+
+
+}
+
+
+
+
+
