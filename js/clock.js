@@ -5,7 +5,18 @@
  * @author      Brian Lee
  * @author      Paul Charles
  */
-//global variables to keep tack of time.
+
+/**
+	Project 2:
+ * @author Victor Berger, Jesse Yang, Jeromy Tsai, and Cammy Vo
+ * EECS 448 - Clock Project
+ * prof: John Gibbons
+ * code freeze: March 6th, 2016 11:59 PM
+
+
+*/
+
+//global variables to keep track of time.
 var hours=0;
 var minutes=0;
 var seconds=0;
