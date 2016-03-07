@@ -40,8 +40,10 @@ div#time_display{
 	position: absolute;
 	width: 705px;
 	height: 150px;
-   	top: 0;
- 	left: 0;
+   	top: 50%;
+	z-index: 15;
+ 	left: 50%;
+	
 		
 }
 
@@ -50,18 +52,20 @@ div#controls_display{
 	position: absolute;
 	width: 705px;
 	height: 150px;
-    top: 153px;
-    font-family: Verdana, Geneva, sans-serif;
-    font-size:25px;
-    text-align: center;
-    padding-top: 20px;
+   	top: 153px;
+   	font-family: Verdana, Geneva, sans-serif;
+   	font-size:25px;
+   	text-align: center;
+   	padding-top: 20px;
 }
 
 /* display time, font-size changes clock size  */
 #full-time{	
 
 	font-size: 75px;
+	text-align: center;
 	visibility: shown;
+	margin: -10px 0 0 -200px;
 
 	
 }

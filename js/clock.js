@@ -561,11 +561,10 @@ for(var i=1; i<=31; i++) {
 }
 
 /**
- * Display the weekday    (1)
- * <p>
+ * Display the weekday    
  * @param  day - Global variable keeping track of day
  * @param  month - Global variable keeping track of month
- *                                                       (2)
+ *                                                       
  */
 var updateDate = false;
 function display_day()
@@ -989,8 +988,16 @@ function display_day()
 }
 
 
-/* ****************************************    */
+/* Start of the display functions (zoom in, zoom out, hide/show display)   */
 
+
+/**
+ * Increases font size of clock display based on an array of 5 different sizes, default being the third one
+ * Changes parameter directly on CSS style page.
+ * <param> font-size CSS attribute of 'full-time' object
+ * @pre User pressed "zoom in" button at any point.
+ * @post Increases font size of clock display. If at maximum, display alert message and does not change size. Calls clock_center() function
+ */
 function zoom_in()
 {
 	var sizeArray = ["25px", "50px", "75px", "100px", "125px"];
@@ -1016,12 +1023,20 @@ function zoom_in()
 		document.getElementById("full-time").style.fontSize = sizeArray[i+1];
 	}
 
+	clock_center()
 }
 
+/**
+ * Decreases font size of clock display based on an array of 5 different sizes, default being the third one
+ * Changes parameter directly on CSS style page.
+ * <param> font-size CSS attribute of 'full-time' object
+ * @pre User pressed "zoom out" button at any point.
+ * @post Decreases font size of clock display. If at minimum, display alert message and does not change size. Calls clock_center() function
+ */
 function zoom_out()
 {
-	var sizeArray = ["25px", "50px", "75px", "100px", "125px"];
-	var arrayIndex;
+	var sizeArray = ["25px", "50px", "75px", "100px", "125px"]; // all possible sizes 
+	var arrayIndex; // dummy variable to keep track of selected size
 	var full_time   = document.getElementById("full-time");
 	var currentSize = getComputedStyle(full_time).getPropertyValue("font-size");
 
@@ -1043,9 +1058,18 @@ function zoom_out()
 		document.getElementById("full-time").style.fontSize = sizeArray[i-1];
 	}
 
+	clock_center()
 }
 
-
+/**
+ * Hides the clock display if currently shown, shows the clock display if currently hidden
+ * Changes parameter directly on CSS style page, both for 'full-time" (actual clock) and 
+ * 	'am_pm" (AM/PM display)
+ * Changes innerHTML text of button accordingly
+ * <param> visibility CSS attribute of 'full-time' and 'am_pm' objects
+ * @pre User pressed "hide display/show display" button at any point.
+ * @post Hides the clock display if currently shown, shows the clock display if currently hidden,    and changes text of button accordingly
+ */
 function hide_show()
 {
 
@@ -1068,8 +1092,46 @@ function hide_show()
 		document.getElementById("hideshow_button").innerHTML = "Hide Display";
 	}
 
-
 }
 
+/**
+ * Updates margin and fontSize attributes of display according to selected size in order
+ * to keep display in the center of screen
+ * <param> margin and fontSize CSS attribute of 'full-time' and 'am_pm' objects
+ * @pre User pressed zoom in or zoom out button at any point.
+ * @post Updates margin attribute of 'full-time' element to center and updates fontSize of 
+ * 	am_pm element to change font size of AM/PM display accordingly
+ */
+function clock_center()
+{
+	var full_time   = document.getElementById("full-time");
+	var currentSize = getComputedStyle(full_time).getPropertyValue("font-size");
+	if(currentSize == "25px")
+	{
+		document.getElementById("full-time").style.margin = "-10px 0 0 -100px"; 
+		document.getElementById("am_pm").style.fontSize = "10px";
+	}
+	else if(currentSize == "50px")
+	{
+		document.getElementById("full-time").style.margin = "-10px 0 0 -150px"; 
+		document.getElementById("am_pm").style.fontSize = "18px";
+	}
+	else if(currentSize == "75px")
+	{
+		document.getElementById("full-time").style.margin = "-10px 0 0 -200px";
+		document.getElementById("am_pm").style.fontSize = "25px"; 
+	}
+	else if(currentSize == "100px")
+	{
+		document.getElementById("full-time").style.margin = "-10px 0 0 -260px"; 
+		document.getElementById("am_pm").style.fontSize = "32px";
+	}
+	else if(currentSize == "125px")
+	{
+		document.getElementById("full-time").style.margin = "-10px 0 0 -320px"; 
+		document.getElementById("am_pm").style.fontSize = "40px";
+	}
+
+}
 
 
