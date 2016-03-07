@@ -1503,6 +1503,19 @@ var stopwatchInterval = setInterval(stopwatch, 1000);
 var stopwatch_hour = 0;
 var stopwatch_min = 0;
 var stopwatch_sec = 0;
+
+/**
+ * Gives the clock a stopwatch function that replaces the clock    (1)
+ * <p>
+ * The stopwatch is operated by incrementing the seconds.
+ * When the seconds reach 60 the stopwatch will reset the seconds to 0,
+ * while incrementing the correct amount from minutes or hours if need be.
+ * 
+ *															(2)
+ * <p>
+ * @param  none
+ *                                                       (3)
+ */
 function stopwatch()
 {
 	if(stopwatchBegin || !stopwatchUsed){}
@@ -1534,26 +1547,61 @@ function stopwatch()
 	display_24hr_stopwatch(stopwatch_hour, stopwatch_min, stopwatch_sec);
 }
 
+/**
+ * Increment stopwatch_sec variable by 1 to keep track of time          (1)
+ * <p>                                                 (3)
+ * @pre call from clock function
+ * @post stopwatch_sec incremented by 1
+ */
 function increment_stopwatch_sec()
 {
 	stopwatch_sec++;
 }
-
+/**
+ * Reset stopwatch_sec to zero                                          (1)
+ * <p>
+ * This function is called when the seconds reach 59 seconds. The next value is 60 which corresponds to zero (2)
+ * <p>                                                 (3)
+ * @pre call from clock function
+ * @post stopwatch_sec reset to zero
+ */
 function reset_stopwatch_sec()
 {
 	stopwatch_sec = 0;
 }
 
+/**
+ * Increment stopwatch_min variable by 1 to keep track of time            (1)
+ * <p>
+ * This function is called when the variables seconds reaches 60    (2)
+ * <p>                                                   (3)
+ * @pre call from clock function
+ * @post stopwatch_min incremented by 1
+ */
 function increment_stopwatch_min()
 {
 	stopwatch_min++;
 }
 
+/**
+ * Reset stopwatch_min to zero        (1)
+ * <p>
+ * This function is called when the minutes reach 59 minutes. The next value is 60 which corresponds to zero   (2)
+ * <p>  
+ * @pre call from clock function
+ * @post stopwatch_min reset to zero                                                  (3)
+ */
 function reset_stopwatch_min()
 {
 	stopwatch_min = 0;
 }
 
+/**
+ * Increment stopwatch_hour by 1 when it reaches 24       (1)
+ * <p>                                                     (3)
+ * @pre call from clock function
+ * @post stopwatch_hour incremented by 1
+ */
 function increment_stopwatch_hour()
 {
 	stopwatch_hour++;
@@ -1564,6 +1612,16 @@ function reset_stopwatch_hour()
 	stopwatch_hour = 0;
 }
 
+/**
+ * Display the stopwatch in 24 hour mode    (1)
+ * <p>
+ * Display stopwatch on clock in 24 hour mode
+ * <p>
+ * @param  stopwatch_hour - Global variable keeping track of hours
+ * @param  stopwatch_min - Global variable keeping track of minutes
+ * @param  stopwatch_sec - Global variable keeping track of seconds
+ *                                                       (3)
+ */
 function display_24hr_stopwatch(hours, minutes, seconds)
 {
 	var second_zero_display;
