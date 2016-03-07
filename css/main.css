@@ -259,41 +259,41 @@ div#stopwatch_module{
 
 /*stopwatch button*/
 #stopwatch_select_button{
-    padding:5px 10px;
-    margin-left: 0px;
-    font-size: 24px;
-    border-radius: 5%;
-    font-family: Verdana, Geneva, sans-serif;
-    color: #00FF00;
-    background-color: #555555;
-    border: 2px solid red; 
-    cursor:pointer;
-    outline: 0;
+    	padding:5px 10px;
+    	margin-left: 0px;
+    	font-size: 24px;
+    	border-radius: 5%;
+    	font-family: Verdana, Geneva, sans-serif;
+    	color: #00FF00;
+    	background-color: #555555;
+    	border: 2px solid red; 
+    	cursor:pointer;
+    	outline: 0;
 }
 /*stopwatch Start stop button*/
 #stopwatch_start_stop_button{
-    padding:5px 15px;
-    margin-left: 20px;
-    font-size: 24px;
+    	padding:5px 15px;
+   	margin-left: 20px;
+    	font-size: 24px;
 	border-radius: 50%;
 	font-family: Verdana, Geneva, sans-serif;
 	color: #00FF00;
-    background-color: #505050;
-    border: 4px solid #00FF00; 
-    cursor:pointer;
+    	background-color: #505050;
+    	border: 4px solid #00FF00; 
+    	cursor:pointer;
 	outline: 0;
 }
 /*stopwatch reset button*/
 #stopwatch_reset_button{
-    padding:5px 15px;
-    margin-left: 20px;
-    font-size: 24px;
+    	padding:5px 15px;
+    	margin-left: 20px;
+    	font-size: 24px;
 	border-radius: 50%;
 	font-family: Verdana, Geneva, sans-serif;
 	color: #00FF00;
-    background-color: #505050;
-    border: 4px solid #00FF00; 
-    cursor:pointer;
+   	background-color: #505050;
+    	border: 4px solid #00FF00; 
+    	cursor:pointer;
 	outline: 0;
 }
 
@@ -306,31 +306,31 @@ input
 
 
 #clock_select_button{
-padding:5px 10px;
-    margin-left: 0px;
+	padding:5px 10px;
+    	margin-left: 0px;
 	margin-right: 3px;
-    font-size: 24px;
+    	font-size: 24px;
 	border-radius: 5%;
 	font-family: Verdana, Geneva, sans-serif;
 	color: #00FF00;
-    background-color: #555555;
-    border: 2px solid red; 
-    cursor:pointer;
-outline: 0;
+	background-color: #555555;
+	border: 2px solid red; 
+	cursor:pointer;
+	outline: 0;
 }
 
 /*timer select button*/
 #timer_select_button{
-padding:5px 10px;
-    margin-left: 0px;
-    font-size: 24px;
+	padding:5px 10px;
+	margin-left: 0px;
+	font-size: 24px;
 	border-radius: 5%;
 	font-family: Verdana, Geneva, sans-serif;
 	color: #00FF00;
-    background-color: #555555;
-    border: 2px solid red; 
-    cursor:pointer;
-outline: 0;
+	background-color: #555555;
+	border: 2px solid red; 
+	cursor:pointer;
+	outline: 0;
 }
 
 div#set_timer_input{
