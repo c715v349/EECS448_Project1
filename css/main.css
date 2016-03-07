@@ -124,8 +124,8 @@ select{
 div#weekday_display{
 	
 	width: 705px;
-	height: 150px;
-    	top: 450px;
+	height: 75px;
+    	top: 250px;
  	left: 100px;
 }
 
@@ -189,7 +189,7 @@ div#timer_controls
 	position: absolute;
 	width: 705px;
 	height: 150px;
-    top: 900px;
+    top: 625px;
     font-family: Verdana, Geneva, sans-serif;
     font-size:25px;
     text-align: center;
@@ -200,7 +200,7 @@ div#timer_display{
 	position: absolute;
 	width: 705px;
 	height: 150px;
-   	top: 800px;
+   	top: 600px;
 	z-index: 15;
  	left: 50%;
 }
@@ -235,7 +235,7 @@ div#stopwatch_module{
 	width: 705px;
 	height: 75px;
         left: 100px;
-    top: 670px;
+    top: 510px;
     font-family: Verdana, Geneva, sans-serif;
     font-size:25px;
     text-align: center;
@@ -295,6 +295,7 @@ input
 #clock_select_button{
 padding:5px 10px;
     margin-left: 0px;
+	margin-right: 3px;
     font-size: 24px;
 	border-radius: 5%;
 	font-family: Verdana, Geneva, sans-serif;
@@ -315,3 +316,16 @@ padding:5px 10px;
     border: 2px solid #00FF00; 
     cursor:pointer;
 }
+
+div#set_timer_input{
+	
+	width: 500px;
+	margin: 0 auto; 
+	border: 4px solid #00FF00;
+	border-radius: 10px;
+	padding: 35px 10px 35px;
+	background-color: #383838;
+	top: 750px;
+}
+
+
