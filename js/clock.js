@@ -394,7 +394,7 @@ for(var i=0; i<=59; i++) {
 /**
  * Allows user to set desired time
  * <p>
- * With the various fields with input, and the set time button event occuring, the time is set to the user desired time. The various feilds are cleared to their initial values and the flashing stops.
+ * With the various fields with input, and the set time button event occuring, the time is set to the user desired time. The various feilds are cleared to their initial values.
  * <p>
  * @pre set time button pushed
  * @post clock display update to new time
@@ -444,30 +444,10 @@ document.getElementById('set_time').addEventListener('click', function() {
 	
 	var select_am_pm = document.getElementById("select_am_pm");
 	select_am_pm[0].selected = select_am_pm[0].defaultSelected;
-	
-	//stop flashing
-	clearInterval(flashing_handle);
-	
-	//Reset the time display's display property after flashing is stopped
+
+	//Reset the time display's display property 
 	document.getElementById("time").style.display = '';
 });
-
-/**
- * Make Time display flash until time has been set once.
- * <p>
- */
-var flashing_text = document.getElementById("time");
-flashing_handle = setInterval(function() {
-	flashing_text.style.display = (flashing_text.style.display == 'none' ? '' : 'none');
-}, 500);
-
-
-
-
-
-
-
-
 
 /**
  * Increments day/month if applicable  (1)
@@ -1085,8 +1065,9 @@ function hide_show()
 	var visibilityOfAMPM   = document.getElementById("am_pm");
 	var currentVisibilityOfAMPM = getComputedStyle(visibilityOfAMPM).getPropertyValue("visibility");
 
-	if ((currentVisibilityOfClock == "visible") && (currentVisibilityOfAMPM == "visible"))
+	if (currentVisibilityOfClock == "visible")
 	{
+
 		document.getElementById("full-time").style.visibility = "hidden";
 		document.getElementById("am_pm").style.visibility = "hidden";
 		document.getElementById("hideshow_button").innerHTML = "Show Display";
@@ -1095,7 +1076,8 @@ function hide_show()
 	if ((currentVisibilityOfClock == "hidden") && (currentVisibilityOfAMPM == "hidden"))
 	{
 		document.getElementById("full-time").style.visibility = "visible";
-		document.getElementById("am_pm").style.visibility = "visible";
+		if(clockSelected)
+			document.getElementById("am_pm").style.visibility = "visible";
 		document.getElementById("hideshow_button").innerHTML = "Hide Display";
 	}
 
@@ -1228,10 +1210,7 @@ document.getElementById('set_timer').addEventListener('click', function() {
 	startTimerDisplay();
 	document.getElementById('timer_start_stop_button').innerHTML = "Stop";
 	
-	//stop flashing
-	clearInterval(flashing_handle);
-	
-	//Reset the time display's display property after flashing is stopped
+	//Reset the time display's display property 
 	document.getElementById("time").style.display = '';
 });
 
@@ -1272,10 +1251,8 @@ function timerInit()
 	timer_sec = parseInt(document.getElementById("select_timer_second").value);
 
 	timerBegin = true;//clock begins again, make sure it doesn't increment a second immediately
-    //stop flashing
-    clearInterval(flashing_handle);
 
-    //Reset the time display's display property after flashing is stopped
+    //Reset the time display's display property 
     document.getElementById("time").style.display = '';
 }
 
@@ -1560,7 +1537,7 @@ function stopwatchSetInit()
     stopwatch_hour = 0; stopwatch_min = 0; stopwatch_sec = 0;
     stopwatchBegin = true;
 
-    //Reset the time display's display property after flashing is stopped
+    //Reset the time display's display property
     document.getElementById("time").style.display = '';
 }
 
