@@ -229,6 +229,7 @@ div#stopwatch-display{
    	top: 0px;
 	z-index: 15;
  	left: 50%;
+	visibility: shown;
 }
 
 /* Stopwatch module */
