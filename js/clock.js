@@ -1159,6 +1159,8 @@ var timer_hour = 0;
 var timer_min = 0;
 var timer_sec = 0;
 
+var timerUsed = false;
+
 var select_timer_hour = document.getElementById("select_timer_hour");
 for(var i=0; i<=99; i++) {
 	
@@ -1325,7 +1327,8 @@ function reset_timer_sec()
 	else
 	{
 		timer_sec = 0;
-		stopTimerDisplay();
+		if(timerUsed)
+			stopTimerDisplay();
 	}
 }
 function dec_timer_min()
@@ -1599,7 +1602,7 @@ document.getElementById('timer_select_button').addEventListener('click', functio
 
 display_24hr_timer(timer_hour, timer_min, timer_sec);
 
-
+		timerUsed = true;
 		clockSelected = false;
 		stopwatchSelected = false;
 		timerSelected = true;
