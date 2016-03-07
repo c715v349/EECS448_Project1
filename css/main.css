@@ -109,7 +109,7 @@ select{
 	background-color: #C0C0C0;
 }
 	
-#clock_button {
+#clock_select_button {
 padding:5px 10px;
     margin-left: 0px;
     font-size: 24px;
@@ -195,7 +195,7 @@ div#stopwatch_module{
 }
 
 /*stopwatch button*/
-#stopwatch_button{
+#stopwatch_select_button{
     padding:5px 10px;
     margin-left: 0px;
     font-size: 24px;

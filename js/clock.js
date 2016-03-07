@@ -15,9 +15,12 @@ var timeBegin = true;//fixes issue with starting at 1 second after the specified
 var clockToggle = true;
 var stopwatchToggle = false;
 var timerToggle = false;
+var lastClockTime = 0;//saves the time in seconds before switching to stopwatch or timer
+var clockCount = 0;//counts the time in seconds since switching to stopwatch or timer
 
 //run the clock function every second.
 var clockInterval = setInterval(clock, 1000);
+var clockInternalInterval = setInterval(funcClockCount, 1000); 
 
 //clock running functions
 /**
@@ -172,7 +175,7 @@ function reset_hours()
  * @param  seconds - Global variable keeping track of seconds
  *                                                       (3)
  */
-function display_12hr_time(hours, mintues, seconds)
+function display_12hr_time(hours, minutes, seconds)
 {
 	//variables for display '0' in front of hours, minutes, seconds
 	var second_zero_display;
@@ -248,7 +251,7 @@ function display_12hr_time(hours, mintues, seconds)
  * @param  seconds - Global variable keeping track of seconds
  *                                                       (3)
  */
-function display_24hr_time(hours, mintues, seconds)
+function display_24hr_time(hours, minutes, seconds)
 {
 	var second_zero_display;
 	var minute_zero_display;
@@ -1094,23 +1097,39 @@ function choose_ST_SW_TM(ST_SW_TM)
 {
 	if(ST_SW_TM == 0)//set_time, disable stopwatch and timer
 	{
+		//get clock time in clock_select_button EventListener
+
 		clockToggle = true;		stopwatchToggle = false;	timerToggle = false;
 
 		//turn off stopwatch and timer
-                document.getElementById('stopwatch_start_stop_button').innerHTML = "Start"
+        document.getElementById('stopwatch_start_stop_button').innerHTML = "Start";
 	}
 	else if(ST_SW_TM == 1)//stopwatch, disable set_time and timer
 	{
+		if(clockToggle)//keep clock time
+		{	
+			lastClockTime = hours * 3600 + minutes * 60 + seconds;
+			clockCount = 0;//counts the time since switching to stopwatch or timer
+		}
+
 		clockToggle = false;	stopwatchToggle = true;		timerToggle = false;
 
 		//turn off timer
+
+		
 	}
 	else//if(ST_SW_TM == 2)//timer, disable set_time and stopwatch
 	{
+		if(clockToggle)//keep clock time
+		{	
+			lastClockTime = hours * 3600 + minutes * 60 + seconds;
+			clockCount = 0;//counts the time since switching to stopwatch or timer
+		}
+
 		clockToggle = false;	stopwatchToggle = false;	timerToggle = true;
 
 		//turn off stopwatch
-                document.getElementById('stopwatch_start_stop_button').innerHTML = "Start"
+        document.getElementById('stopwatch_start_stop_button').innerHTML = "Start";
 	}
 }
 
@@ -1126,4 +1145,34 @@ function startDisplay()
 {
 	clearInterval(clockInterval);//if clock interval has been set already, then need to clear it first as not to stack executions with each interval
 	clockInterval = setInterval(clock, 1000);
+}
+
+
+
+/*
+*
+*	Clock, Stopwatch, timer selector button functionality
+*
+*/
+
+document.getElementById('clock_select_button').addEventListener('click', function() {
+
+	choose_ST_SW_TM(0);
+
+	hours = Math.floor((lastClockTime + clockCount) / 3600);
+	minutes = Math.floor(((lastClockTime + clockCount) % 3600) / 60);
+	seconds = ((lastClockTime + clockCount) % 60);
+
+	startDisplay();
+});
+
+document.getElementById('stopwatch_select_button').addEventListener('click', function() {
+
+	choose_ST_SW_TM(1);
+});
+
+
+function funcClockCount()
+{
+	clockCount++;
 }
