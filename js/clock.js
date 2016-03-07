@@ -1597,6 +1597,14 @@ document.getElementById('clock_select_button').addEventListener('click', functio
 document.getElementById('timer_select_button').addEventListener('click', function() {
 
 
+//hours need to modify
+	timer_hour = parseInt(document.getElementById("select_timer_hour").value);
+	
+	//these are directly set
+	timer_min = parseInt(document.getElementById("select_timer_minute").value);
+	timer_sec = parseInt(document.getElementById("select_timer_second").value);
+
+
 		clockSelected = false;
 		stopwatchSelected = false;
 		timerSelected = true;

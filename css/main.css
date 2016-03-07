@@ -200,7 +200,7 @@ div#timer_display{
 	position: absolute;
 	width: 705px;
 	height: 150px;
-   	top: 600px;
+   	top: 900px;
 	z-index: 15;
  	left: 50%;
 }
@@ -325,7 +325,7 @@ div#set_timer_input{
 	border-radius: 10px;
 	padding: 35px 10px 35px;
 	background-color: #383838;
-	top: 750px;
+	top: 950px;
 }
 
 
