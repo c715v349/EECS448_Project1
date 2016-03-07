@@ -184,7 +184,7 @@ div#daymonth_display{
     text-align: center;
     padding-top: 5px;
 }
-
+/* Timer controls*/
 div#timer_controls
 {
 	position: absolute;
@@ -206,6 +206,7 @@ div#timer_display{
  	left: 50%;
 }
 
+/* display timer*/
 #full_timer
 {
 	font-size: 75px;
@@ -310,6 +311,7 @@ padding:5px 10px;
 outline: 0;
 }
 
+/*timer select button*/
 #timer_select_button{
 padding:5px 10px;
     margin-left: 0px;
