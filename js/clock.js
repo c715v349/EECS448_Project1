@@ -10,11 +10,15 @@ var hours=0;
 var minutes=0;
 var seconds=0;
 
+
 // Our variables
 var clockBegin = true;//fixes issue with starting at 1 second after the specified time
 
 //run the clock function every second.
-setInterval(clock, 1000);
+var clockInterval = setInterval(clock, 1000);
+var timerInterval = setInterval(timer, 1000);
+
+var clockSelected = true; var stopwatchSelected = false; var timerSelected = false;
 
 //clock running functions
 /**
@@ -63,13 +67,16 @@ function clock()
 		increment_day();
 	}
 
-	if(document.getElementById('display_12hr').checked)
+	if(clockSelected)
 	{
-		display_12hr_time(hours, minutes, seconds);
-	}
-	else
-	{
-		display_24hr_time(hours, minutes, seconds);
+		if(document.getElementById('display_12hr').checked)
+		{
+			display_12hr_time(hours, minutes, seconds);
+		}
+		else
+		{
+			display_24hr_time(hours, minutes, seconds);
+		}
 	}
 	
 
@@ -1134,4 +1141,464 @@ function clock_center()
 
 }
 
+function stopTimerDisplay()
+{
+	clearInterval(timerInterval);
+}
 
+//used by stopwatch, timer, and set_time (to start display again if it is stopped by stopwatch or timer)
+function startTimerDisplay()
+{
+	clearInterval(timerInterval);//if clock interval has been set already, then need to clear it first as not to stack executions with each interval
+	timerInterval = setInterval(timer, 1000);
+}
+
+var timerBegin = true;
+
+var timer_hour = 0;
+var timer_min = 0;
+var timer_sec = 0;
+
+var select_timer_hour = document.getElementById("select_timer_hour");
+for(var i=0; i<=99; i++) {
+	
+		select_timer_hour.add(new Option(i));
+	
+}
+
+var select_timer_minute = document.getElementById("select_timer_minute");
+for(var i=0; i<=59; i++) 
+{
+	if(i < 10)
+	{
+		if(i == 0)
+		{
+			var o1 = new Option(("0"+i));
+			o1.setAttribute("selected","selected");
+			select_timer_minute.add(o1);
+		}
+		else
+		{
+			i = "0" + i;
+			select_timer_minute.add(new Option(i));
+		}
+	}
+	else
+	{
+		select_timer_minute.add(new Option(i));
+	}
+}
+
+
+var select_timer_second = document.getElementById("select_timer_second");
+for(var i=0; i<=59; i++) {
+	if(i < 10)
+	{
+		if(i == 0)
+		{
+			var o1 = new Option(("0"+i));
+			o1.setAttribute("selected","selected");
+			select_timer_second.add(o1);
+		}
+		else
+		{
+			i = "0" + i;
+			select_timer_second.add(new Option(i));
+		}
+	}
+	else
+	{
+		select_timer_second.add(new Option(i));
+	}
+}
+
+document.getElementById('set_timer').addEventListener('click', function() {
+	//hours need to modify
+	timer_hour = parseInt(document.getElementById("select_timer_hour").value);
+	
+	//these are directly set
+	timer_min = parseInt(document.getElementById("select_timer_minute").value);
+	timer_sec = parseInt(document.getElementById("select_timer_second").value);
+
+	timerBegin = true;//clock begins again, make sure it doesn't increment a second immediately
+	
+	
+	startTimerDisplay();
+	document.getElementById('timer_start_stop_button').innerHTML = "Stop";
+	
+	//stop flashing
+	clearInterval(flashing_handle);
+	
+	//Reset the time display's display property after flashing is stopped
+	document.getElementById("time").style.display = '';
+});
+
+
+document.getElementById('timer_start_stop_button').addEventListener('click', function()
+{
+	if(document.getElementById('timer_start_stop_button').innerHTML == "Start")
+	{
+		document.getElementById('timer_start_stop_button').innerHTML = "Stop";	
+		startTimerDisplay();
+	}
+	else
+	{
+		document.getElementById('timer_start_stop_button').innerHTML = "Start";
+
+		stopTimerDisplay();
+	}
+});
+
+document.getElementById('timer_reset_button').addEventListener('click', function()
+{
+	timerInit();
+	if(document.getElementById('timer_start_stop_button').innerHTML == "Start")
+	{
+		startTimerDisplay();
+	}
+	document.getElementById('timer_start_stop_button').innerHTML = "Start";
+	setTimeout(stopTimerDisplay, 1000);
+});
+
+function timerInit()
+{
+    	//hours need to modify
+	timer_hour = parseInt(document.getElementById("select_timer_hour").value);
+	
+	//these are directly set
+	timer_min = parseInt(document.getElementById("select_timer_minute").value);
+	timer_sec = parseInt(document.getElementById("select_timer_second").value);
+
+	timerBegin = true;//clock begins again, make sure it doesn't increment a second immediately
+    //stop flashing
+    clearInterval(flashing_handle);
+
+    //Reset the time display's display property after flashing is stopped
+    document.getElementById("time").style.display = '';
+}
+
+
+function timer()
+{
+	
+	if(timerBegin){
+
+	}
+	else
+	{
+		dec_timer_sec();
+	}
+
+	if((timer_sec == -1) && !timerBegin)
+	{
+		reset_timer_sec();
+	}
+	else if(timerBegin)
+	{
+		timerBegin = false;
+	}
+	
+	if(timer_min == -1)
+	{
+		reset_timer_min();
+	}	
+	display_24hr_timer(timer_hour, timer_min, timer_sec);
+}
+
+function dec_timer_sec()
+{
+	timer_sec--;
+}
+function reset_timer_sec()
+{
+	if(timer_min > 0)
+	{
+		dec_timer_min();
+		timer_sec = 59;
+	}
+	else if(timer_hour > 0)
+	{
+		dec_timer_hour();
+		timer_min = 59;
+		timer_sec = 59;
+	}
+	else
+	{
+		timer_sec = 0;
+		stopTimerDisplay();
+	}
+}
+function dec_timer_min()
+{
+	timer_min--;
+}
+function reset_timer_min()
+{
+	if(timer_hour > 0)
+	{
+		dec_timer_hour();
+		timer_min = 59;
+		timer_sec = 59;
+	}
+}
+function dec_timer_hour()
+{
+	timer_hour--;
+}
+
+function display_24hr_timer(hours, mintues, seconds)
+{
+	var second_zero_display;
+	var minute_zero_display;
+	var hour_zero_display;
+	
+	if(timer_sec < 10)
+	{
+		second_zero_display = "0";
+	}
+	else
+	{
+		second_zero_display = "";
+	}
+    
+	if(timer_min < 10)
+	{
+		minute_zero_display = "0";
+	}
+	else
+	{
+		minute_zero_display = "";
+	}
+	
+	if(timer_hour < 10)
+	{
+		hour_zero_display = "0";
+	}
+	else
+	{
+		hour_zero_display = "";
+	}
+	
+	if(timerSelected)
+	{
+		document.getElementById("full-time").innerHTML= 
+			hour_zero_display 	+ timer_hour + ":" + 
+			minute_zero_display + timer_min + ":" + 
+			second_zero_display + timer_sec;
+	}
+}
+
+var stopwatchUsed = false;
+
+var stopwatchBegin = true;
+
+var stopwatchInterval = setInterval(stopwatch, 1000);
+var stopwatch_hour = 0;
+var stopwatch_min = 0;
+var stopwatch_sec = 0;
+function stopwatch()
+{
+	if(stopwatchBegin || !stopwatchUsed){}
+	else
+	{
+		increment_stopwatch_sec()
+	}
+
+	if((stopwatch_sec % 60) == 0 && !stopwatchBegin)
+	{
+		increment_stopwatch_min();
+		reset_stopwatch_sec();
+	}
+	else if(stopwatchBegin)
+	{
+		if(stopwatchUsed)
+			stopwatchBegin = false;
+	}
+
+	if(stopwatch_min == 60)
+	{
+		increment_stopwatch_hour();
+		reset_stopwatch_min()
+	}
+	if(stopwatch_hour == 99)
+	{
+		reset_stopwatch_hour();
+	}
+	display_24hr_stopwatch(stopwatch_hour, stopwatch_min, stopwatch_sec);
+}
+
+function increment_stopwatch_sec()
+{
+	stopwatch_sec++;
+}
+
+function reset_stopwatch_sec()
+{
+	stopwatch_sec = 0;
+}
+
+function increment_stopwatch_min()
+{
+	stopwatch_min++;
+}
+
+function reset_stopwatch_min()
+{
+	stopwatch_min = 0;
+}
+
+function increment_stopwatch_hour()
+{
+	stopwatch_hour++;
+}
+
+function reset_stopwatch_hour()
+{
+	stopwatch_hour = 0;
+}
+
+function display_24hr_stopwatch(hours, minutes, seconds)
+{
+	var second_zero_display;
+	var minute_zero_display;
+	var hour_zero_display;
+	
+	if(stopwatch_sec < 10)
+	{
+		second_zero_display = "0";
+	}
+	else
+	{
+		second_zero_display = "";
+	}
+    
+	if(stopwatch_min < 10)
+	{
+		minute_zero_display = "0";
+	}
+	else
+	{
+		minute_zero_display = "";
+	}
+	
+	if(stopwatch_hour < 10)
+	{
+		hour_zero_display = "0";
+	}
+	else
+	{
+		hour_zero_display = "";
+	}
+	
+	if(stopwatchSelected)
+	{
+		document.getElementById("full-time").innerHTML= 
+			hour_zero_display 	+ stopwatch_hour + ":" + 
+			minute_zero_display + stopwatch_min + ":" + 
+			second_zero_display + stopwatch_sec;
+	}
+}
+
+/*	
+*	~~STOPWATCH~~
+*	Start/stop toggle for stopwatch.
+*	Start will begin the stopwatch at 00:00:00 if stopwatch is not already toggled on.
+*	Start will resume stopwatch at displayed time if stopwatch was recently stopped.
+*	Stop will stop stopwatch if it is started and hold the displayed time.
+*/
+document.getElementById('stopwatch_start_stop_button').addEventListener('click', function() {
+
+	
+	if(document.getElementById('stopwatch_start_stop_button').innerHTML == "Start")//in stopped state
+	{
+		document.getElementById('stopwatch_start_stop_button').innerHTML = "Stop";
+			
+		startStopwatchDisplay();
+	} 
+	else//=="Stop", in started state
+	{
+		document.getElementById('stopwatch_start_stop_button').innerHTML = "Start";
+		stopStopwatchDisplay();
+	}	
+
+	stopwatchUsed = true;
+});
+
+/*
+*	~~STOPWATCH~~
+*	Reset for stopwatch.
+*	Reset will set stopwatch at 00:00:00. 
+*	Reset will stop stopwatch. 
+*	Reset will turn the Start/stop toggle to display start.
+*/
+document.getElementById('stopwatch_reset_button').addEventListener('click', function() {
+
+
+		//Reset will set stopwatch at 00:00:00. 
+		stopwatchSetInit();
+
+
+		if(document.getElementById('stopwatch_start_stop_button').innerHTML == "Start")//in stopped state
+		{
+			startStopwatchDisplay();//must update the display to 00:00:00 before stopping display
+		}
+		else//=="Stop", in started state
+		{
+			document.getElementById('stopwatch_start_stop_button').innerHTML = "Start";
+		}
+         
+		setTimeout(stopStopwatchDisplay, 1000);//must hit the next second (run clock() for 1000ms) in order to update the display to 00:00:00 before stopping display
+		
+});
+
+//begin the stopwatch at 00:00:00
+function stopwatchSetInit()
+{
+    stopwatch_hour = 0; stopwatch_min = 0; stopwatch_sec = 0;
+    stopwatchBegin = true;
+
+    //Reset the time display's display property after flashing is stopped
+    document.getElementById("time").style.display = '';
+}
+
+//used by stopwatch and timer
+function stopStopwatchDisplay()
+{
+	clearInterval(stopwatchInterval);
+}
+
+//used by stopwatch, timer, and set_time (to start display again if it is stopped by stopwatch or timer)
+function startStopwatchDisplay()
+{
+	clearInterval(stopwatchInterval);//if clock interval has been set already, then need to clear it first as not to stack executions with each interval
+	stopwatchInterval = setInterval(stopwatch, 1000);
+}
+
+
+
+document.getElementById('stopwatch_select_button').addEventListener('click', function() {
+
+
+		clockSelected = false;
+		stopwatchSelected = true;
+		timerSelected = false;
+		document.getElementById("am_pm").style.visibility = "hidden";
+});
+
+document.getElementById('clock_select_button').addEventListener('click', function() {
+
+
+		clockSelected = true;
+		stopwatchSelected = false;
+		timerSelected = false;
+		document.getElementById("am_pm").style.visibility = "visible";
+});
+
+document.getElementById('timer_select_button').addEventListener('click', function() {
+
+
+		clockSelected = false;
+		stopwatchSelected = false;
+		timerSelected = true;
+		document.getElementById("am_pm").style.visibility = "hidden";
+});

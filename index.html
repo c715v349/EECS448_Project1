@@ -52,6 +52,7 @@
 	
 			<!-- Set time -->
 			<div id="set_time_input">
+				<button type="button" id="clock_select_button">Clock</button>
 				<select id="select_hour"></select>
 				<select id="select_minute"></select>
 				<select id="select_second"></select>
@@ -104,7 +105,36 @@
 			</div><!-- End of day input controls -->
 
 		</div><!-- End of Day/Month -->
+		<div id='stopwatch_display'>
+			<p id='stopwatch'><span id='full-stopwatch'></span></p>
+		</div>
+		<!-- Stopwatch -->
+      <div id="stopwatch_module">
+        <button type="button" id="stopwatch_select_button">Stopwatch</button>
+        <button type="button" id="stopwatch_start_stop_button">Start</button>
+        <button type="button" id="stopwatch_reset_button">Reset</button>
+      </div><!-- End of Stopwatch -->
 
+
+		<div id='timer_display'>
+			<p id='timer'><span id='full-timer'></span></p>
+		</div>
+
+		<!-- TIMER Controls -->
+		<div id="timer_controls">	
+	
+			<!-- Set time -->
+			<div id="set_timer_input">
+				<button type="button" id="timer_select_button">Timer</button>
+				<select id="select_timer_hour"></select>
+				<select id="select_timer_minute"></select>
+				<select id="select_timer_second"></select>
+				<button type="button" id="set_timer">Set Timer</button>
+				<button type="button" id="timer_start_stop_button">Start</button>
+        		<button type="button" id="timer_reset_button">Reset</button>
+			</div>
+
+		</div><!-- End of display time controls -->
 
 
 	</div><!-- End of main display -->
